@@ -160,7 +160,6 @@ namespace ItemInfoMaker
             {
                 ItemDic.FillDummy(list);
             }
-            Item tmp = dic[11966];
 
             //書き込み
             string dir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
