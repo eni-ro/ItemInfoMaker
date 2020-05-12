@@ -65,14 +65,17 @@ namespace ItemInfoMaker
                         if (Int32.TryParse(word[(int)ItemDBPos.View].Trim(), out class_num))
                         {
                             dic[id].ClassNum = class_num;
-                            dic[id].costume = false;
-                            int loc;
-                            if (( class_num != 0 ) && Int32.TryParse(word[(int)ItemDBPos.Loc].Trim(), out loc))
+                        }
+                        int loc;
+                        if ( Int32.TryParse(word[(int)ItemDBPos.Loc].Trim(), out loc))
+                        {
+                            if ((loc & (int)EquipLoc.LOC_COSTUME_ALL) != 0)
                             {
-                                if((loc & ((int)EquipLoc.LOC_COSTUME_HEAD_TMB | (int)EquipLoc.LOC_COSTUME_ROBE)) != 0)
-                                {
-                                    dic[id].costume = true;
-                                }
+                                dic[id].costume = true;
+                            }
+                            else
+                            {
+                                dic[id].costume = false;
                             }
                         }
                     }
@@ -113,6 +116,7 @@ namespace ItemInfoMaker
             sr.Close();
         }
     }
+
     class idnum2itemdisplaynametableReader : itemdisplaynametableReader
     {
         public idnum2itemdisplaynametableReader(string readfile) : base(readfile)
@@ -124,6 +128,7 @@ namespace ItemInfoMaker
             itm.identifiedDisplayName = newname;
         }
     }
+
     class num2itemdisplaynametableReader : itemdisplaynametableReader
     {
         public num2itemdisplaynametableReader(string readfile) : base(readfile)
@@ -133,6 +138,22 @@ namespace ItemInfoMaker
         protected override void SetItemDisplayName(Item itm, string newname)
         {
             itm.unidentifiedDisplayName = newname;
+        }
+    }
+
+    class itemclassnumtable : itemdisplaynametableReader
+    {
+        public itemclassnumtable(string readfile) : base(readfile)
+        {
+
+        }
+        protected override void SetItemDisplayName(Item itm, string newname)
+        {
+            int num;
+            if (int.TryParse(newname, out num))
+            {
+                itm.ClassNum = num;
+            }
         }
     }
 
@@ -380,6 +401,7 @@ namespace ItemInfoMaker
             }
             sr.Close();
             List<Item> list = new List<Item>(dic.Values);
+
             foreach (Item ritem in tmpdoc)
             {
                 
@@ -394,12 +416,7 @@ namespace ItemInfoMaker
                     witem.unidentifiedDescriptionName = ritem.unidentifiedDescriptionName;
                     witem.identifiedResourceName = ritem.identifiedResourceName;
                     witem.identifiedDescriptionName = ritem.identifiedDescriptionName;
-                    //Slotは確実にitem_dbの方が正しいので上書きしない
-                    //ClassViewは武器の場合item_dbと異なる値を設定する必要があるので、0でない場合は上書き
-                    if (ritem.ClassNum != 0)
-                    {
-                        witem.ClassNum = ritem.ClassNum;
-                    }
+                    witem.ClassNum = ritem.ClassNum;
                 }
                 else if(dic.ContainsKey(ritem.id)){
                     dic[ritem.id] = ritem;

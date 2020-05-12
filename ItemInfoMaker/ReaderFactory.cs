@@ -14,6 +14,7 @@ namespace ItemInfoMaker
         num2itemdisplaynametable,
         num2itemdesctable,
         num2itemresnametable,
+        itemclassnumtable,
         iteminfo,
         itemdb,
     }
@@ -50,6 +51,9 @@ namespace ItemInfoMaker
                             break;
                         case FileType.num2itemresnametable:
                             fr = new num2itemresnametableReader(path);
+                            break;
+                        case FileType.itemclassnumtable:
+                            fr = new itemclassnumtable(path);
                             break;
                         case FileType.iteminfo:
                             fr = new iteminfoReader(path, false);

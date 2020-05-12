@@ -65,6 +65,7 @@ namespace ItemInfoMaker
 		LOC_SHOES_SHADOW = 0x080000,    // シューズシャドウ
 		LOC_RACCESSORY_SHADOW = 0x100000,   // アクセサリ右シャドウ
 		LOC_LACCESSORY_SHADOW = 0x200000,   // アクセサリ左シャドウ
+		LOC_COSTUME_ALL = 0x3F7C00,   // コスチューム全箇所
 	}
     class ItemDB
     {
