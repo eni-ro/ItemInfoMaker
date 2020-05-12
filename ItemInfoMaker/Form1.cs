@@ -14,7 +14,7 @@ namespace ItemInfoMaker
     {
         private string output_inteminfo_path;
         private string output_intemdb_path;
-        private string version = "0.1";
+        private string version = "0.2";
 
         public Form1()
         {
@@ -166,6 +166,9 @@ namespace ItemInfoMaker
             Writer wr = new Writer(output_inteminfo_path, dir + "\\itemInfo_footer.lub");
             wr.Write(list, checkBoxCostume.Checked, true);
             System.Media.SystemSounds.Asterisk.Play();
+            textBoxErrMsg.Text += "Done";
+            textBoxErrMsg.SelectionStart = textBoxErrMsg.Text.Length;
+            textBoxErrMsg.ScrollToCaret();
         }
 
         private void Form1_Load(object sender, EventArgs e)

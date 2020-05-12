@@ -27,6 +27,13 @@
 * `num2itemresnametable`  
 未鑑定アイテムのリソースファイルをピックアップする  
 `data.grf`から抽出
+* `itemslotcounttable`  
+スロット数をピックアップする  
+後述の`itemdb` を使用する場合は基本的に不要  
+* `itemclassnumtable`  
+View値を指定する  
+個別スプライトが存在する武器等で使用する  
+記載フォーマットは`idnum2itemresnametable`等と同じで`ID#View値#`と記載していく
 * `iteminfo`  
 全ての項目をピックアップする  
 本家データにオリジナルアイテムの項目を追加するときに使用  
@@ -41,7 +48,8 @@
 * IDを2Byteに制限する(ItemID拡張前のRagexe用)  
 65536以上のIDを割り当てられているアイテムを、65536で割った余りのIDで出力する  
 IDを4Byteに拡張前はIDの下位2Byteのみでiteminfoから検索を行うため、古いRagexeを行う場合はチェックすること  
-IDを65536で割った余りのIDに変換した結果、IDの重複が発生した場合は、小さいIDのものが削除される  
+IDを65536で割った余りのIDに変換した結果、IDの重複が発生した場合は、実行ファイルと同じフォルダに置いてある`DuplicateConfig.xml`を元にどちらを採用するか判断する  
+`DuplicateConfig.xml`に記載がない場合は、小さいIDのものが削除される  
 * エラーにならないように不足箇所にダミー設定を入力する  
 アイテム名やリソースファイル設定が存在しない場合に、エラーにならないように適当に設定を行う
 * IDでソートする  
@@ -52,5 +60,58 @@ IDを65536で割った余りのIDに変換した結果、IDの重複が発生し
 詳細不明なので適当です  
 
 ## その他
-exeファイルと同じ階層にある`itemInfo_footer.lub`を最後に結合して出力します  
-必要に応じてファイルを置き換えてください  
+exeファイルと同じ階層にある`itemInfo_footer.lub`を最後に結合して出力する
+必要に応じてファイルを置き換えること
+
+## 設定サンプル
+```
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <LimitItemID>true</LimitItemID>
+  <FillDummy>true</FillDummy>
+  <SortByID>true</SortByID>
+  <Costume>false</Costume>
+  <iteminfo_path>C:\RO\iteminfo_Sak2.lub</iteminfo_path>
+  <itemdb_path></itemdb_path>
+  <Input>
+    <type>itemclassnumtable</type>
+    <path>C:\RO\itemclassnumtable.txt</path>
+  </Input>
+  <Input>
+    <type>iteminfo</type>
+    <path>C:\RO\iteminfo_original_difflub.txt</path>
+  </Input>
+  <Input>
+    <type>num2itemresnametable</type>
+    <path>C:\RO\num2itemresnametable.txt</path>
+  </Input>
+  <Input>
+    <type>num2itemdesctable</type>
+    <path>C:\RO\num2itemdesctable.txt</path>
+  </Input>
+  <Input>
+    <type>num2itemdisplaynametable</type>
+    <path>C:\RO\num2itemdisplaynametable.txt</path>
+  </Input>
+  <Input>
+    <type>idnum2itemresnametable</type>
+    <path>C:\RO\idnum2itemresnametable.txt</path>
+  </Input>
+  <Input>
+    <type>idnum2itemdesctable</type>
+    <path>C:\RO\idnum2itemdesctable.txt</path>
+  </Input>
+  <Input>
+    <type>idnum2itemdisplaynametable</type>
+    <path>C:\RO\idnum2itemdisplaynametable.txt</path>
+  </Input>
+  <Input>
+    <type>itemdb</type>
+    <path>E:\ROEmu\ServerAuriga\db\addon\item_db_add.txt</path>
+  </Input>
+  <Input>
+    <type>itemdb</type>
+    <path>E:\ROEmu\ServerAuriga\db\item_db.txt</path>
+  </Input>
+</root>
+```
