@@ -157,6 +157,22 @@ namespace ItemInfoMaker
         }
     }
 
+    class itemslotcounttable : itemdisplaynametableReader
+    {
+        public itemslotcounttable(string readfile) : base(readfile)
+        {
+
+        }
+        protected override void SetItemDisplayName(Item itm, string newname)
+        {
+            int num;
+            if (int.TryParse(newname, out num))
+            {
+                itm.slotCount = num;
+            }
+        }
+    }
+
     abstract class itemresnametableReader : Reader
     {
         public itemresnametableReader(string readfile) : base(readfile)
