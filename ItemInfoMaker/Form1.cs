@@ -14,7 +14,7 @@ namespace ItemInfoMaker
     {
         private string output_inteminfo_path;
         private string output_intemdb_path;
-        private string version = "0.2";
+        private string version = "0.3";
 
         public Form1()
         {

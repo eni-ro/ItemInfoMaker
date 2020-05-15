@@ -51,7 +51,7 @@ namespace ItemInfoMaker
                 sw.WriteLine("\t\tClassNum = " + item.ClassNum.ToString() + ",");
                 if( costume)
                 {
-                    sw.WriteLine("\t\tClassNum = " + item.costume.ToString().ToLowerInvariant() + ",");
+                    sw.WriteLine("\t\tcostume = " + item.costume.ToString().ToLowerInvariant() + ",");
                 }
 
                 sw.WriteLine("\t},");
